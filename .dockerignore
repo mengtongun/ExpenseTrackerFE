@@ -1,0 +1,39 @@
+# Dependencies
+node_modules
+
+# Build output (will be generated in container)
+dist
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Documentation
+README.md
+Requirement.md
+
+# OpenAPI spec (if not needed in production)
+openapi.json
+
