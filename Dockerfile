@@ -15,7 +15,7 @@ COPY . .
 
 # Build the application
 ENV BUN_PUBLIC_API_BASE_URL=${BUN_PUBLIC_API_BASE_URL}
-RUN bun run build
+RUN bun run build --env inline
 
 # Stage 2: Production stage
 FROM nginx:alpine
