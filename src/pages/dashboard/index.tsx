@@ -138,16 +138,13 @@ export function DashboardPage() {
           </div>
           <ul className="space-y-2 text-sm text-primary">
             <li className="rounded-xl border border-(--color-border) px-4 py-3">
-              Use <span className="font-semibold">N</span> to open a new expense
-              from anywhere.
+              <a href="/expenses">Create a new expense</a>
             </li>
             <li className="rounded-xl border border-(--color-border) px-4 py-3">
-              Filter reports by pressing{" "}
-              <span className="font-semibold">/</span> and typing a category.
+              <a href="/reports">View reports</a>
             </li>
             <li className="rounded-xl border border-(--color-border) px-4 py-3">
-              Visit <span className="font-semibold">Settings</span> to set
-              default currencies and ranges.
+              <a href="/settings">Configure default currencies and ranges</a>
             </li>
           </ul>
         </div>
