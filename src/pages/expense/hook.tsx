@@ -3,6 +3,7 @@ import { TableColumn } from "@/components/common/Table";
 import { format } from "date-fns";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 import { getCategories } from "../../api/categories";
 import {
   createExpense,
@@ -26,6 +27,7 @@ interface Filters {
 const PAGE_SIZES = [10, 20, 50];
 
 export const useExpense = () => {
+  const navigate = useNavigate();
   const [categories, setCategories] = useState<CategoryDto[]>([]);
   const [result, setResult] = useState<ExpensePagedResult | null>(null);
   const [loading, setLoading] = useState(true);
@@ -202,6 +204,15 @@ export const useExpense = () => {
   useEffect(() => {
     void fetchCategories();
   }, [fetchCategories]);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const isNew = searchParams.get("new");
+    if (isNew == "true") {
+      setDrawerOpen(true);
+      navigate(`/expenses`, { replace: true });
+    }
+  }, [navigate, location.search]);
 
   useEffect(() => {
     void fetchExpenses(filters);

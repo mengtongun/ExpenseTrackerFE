@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Button } from "../common/Button";
 
 export interface AlertModalProps {
@@ -41,6 +43,22 @@ export function AlertModal({
   onConfirm,
   onCancel,
 }: AlertModalProps) {
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+      const handleEscape = (event: KeyboardEvent) => {
+        if (event.key === "Escape") {
+          onCancel();
+        }
+      };
+      document.addEventListener("keydown", handleEscape);
+      return () => {
+        document.removeEventListener("keydown", handleEscape);
+        document.body.style.overflow = "";
+      };
+    }
+  }, [open, onCancel]);
+
   if (!open) return null;
 
   const styles = variantStyles[variant];
@@ -49,7 +67,7 @@ export function AlertModal({
     await onConfirm();
   };
 
-  return (
+  return createPortal(
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-(--color-overlay) px-4 py-6"
       onClick={(e) => {
@@ -79,6 +97,7 @@ export function AlertModal({
           </Button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

@@ -62,15 +62,16 @@ export function Sidebar({ isMobileOpen, onClose }: SidebarProps) {
             Finora
           </p>
           <p className="text-sm text-(--color-secondary)">
-            Track smarter. Spend wiser.
+            Track smarter.
+            <br /> Spend wiser.
           </p>
         </div>
 
         <Button
           type="button"
           onClick={onClose}
-          variant="secondary"
-          className="lg:hidden h-9! w-9! p-0! border! border-(--color-border)! text-secondary! hover:text-primary! hover:border-(--color-primary)!"
+          variant="light"
+          className="lg:hidden h-9! w-9! p-0! text-secondary! hover:text-primary!"
           aria-label="Close navigation"
         >
           <FiX className="h-4 w-4" />

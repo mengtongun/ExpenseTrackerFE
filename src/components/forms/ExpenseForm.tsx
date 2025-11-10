@@ -81,7 +81,10 @@ export function ExpenseForm({
   };
 
   return (
-    <form className="space-y-4" onSubmit={handleSubmit}>
+    <form
+      className="space-y-4 rounded-t-3xl sm:rounded-3xl"
+      onSubmit={handleSubmit}
+    >
       <Select
         label="Category"
         value={categoryId}

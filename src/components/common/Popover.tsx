@@ -1,9 +1,26 @@
-import { ReactNode, useEffect, useRef, useState } from "react";
+import {
+  autoUpdate,
+  flip,
+  offset,
+  Placement,
+  shift,
+  useClick,
+  useDismiss,
+  useFloating,
+  useInteractions,
+} from "@floating-ui/react";
+import { ReactNode, useState } from "react";
 
 type Props = {
   children: ReactNode;
   trigger: ReactNode;
   align?: "left" | "right" | "center";
+};
+
+const alignToPlacement: Record<"left" | "right" | "center", Placement> = {
+  left: "bottom-start",
+  right: "bottom-end",
+  center: "bottom",
 };
 
 export const Popover: React.FC<Props> = ({
@@ -12,45 +29,42 @@ export const Popover: React.FC<Props> = ({
   align = "right",
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const popoverRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        popoverRef.current &&
-        !popoverRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
+  const { refs, floatingStyles, context } = useFloating({
+    open: isOpen,
+    onOpenChange: setIsOpen,
+    placement: alignToPlacement[align],
+    middleware: [offset(8), flip(), shift()],
+    whileElementsMounted: autoUpdate,
+  });
 
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
+  const click = useClick(context);
+  const dismiss = useDismiss(context);
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    click,
+    dismiss,
+  ]);
 
   return (
-    <div className="relative" ref={popoverRef}>
-      <div onClick={() => setIsOpen(!isOpen)} className="cursor-pointer">
+    <>
+      <div
+        ref={refs.setReference}
+        {...getReferenceProps()}
+        className="cursor-pointer"
+      >
         {trigger}
       </div>
       {isOpen && (
         <div
-          className={`absolute top-full mt-2 w-48 bg-transparent overflow-hidden z-50 ${
-            align === "right"
-              ? "right-0"
-              : align === "left"
-              ? "left-0"
-              : "left-1/2 -translate-x-1/2"
-          }`}
+          ref={refs.setFloating}
+          style={floatingStyles}
+          {...getFloatingProps()}
+          className="z-50 bg-transparent overflow-hidden"
         >
           {children}
         </div>
       )}
-    </div>
+    </>
   );
 };

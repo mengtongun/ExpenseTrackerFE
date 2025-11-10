@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { createPortal } from "react-dom";
 
 export interface FormModalProps {
   open: boolean;
@@ -43,7 +44,7 @@ export function FormModal({
 
   if (!open) return null;
 
-  return (
+  return createPortal(
     <div
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-(--color-overlay) px-4 py-6"
       onClick={(e) => {
@@ -76,6 +77,7 @@ export function FormModal({
         {children}
         {footer && <div className="pt-2">{footer}</div>}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

@@ -139,13 +139,10 @@ export function Topbar({
               }
               align="right"
             >
-              <button
-                onClick={handleLogout}
-                className="w-full px-4 py-3 text-left flex items-center gap-3 hover:bg-gray-100 dark:hover:bg-gray-800 transition text-primary"
-              >
+              <Button onClick={handleLogout} variant="danger">
                 <FiLogOut className="h-5 w-5" />
                 <span>Logout</span>
-              </button>
+              </Button>
             </Popover>
           </div>
         </div>
@@ -234,7 +231,7 @@ export function Topbar({
                   }
                   align="center"
                 >
-                  <Button onClick={handleLogout} variant="warning">
+                  <Button onClick={handleLogout} variant="danger">
                     <FiLogOut className="h-5 w-5" />
                     <span>Logout</span>
                   </Button>

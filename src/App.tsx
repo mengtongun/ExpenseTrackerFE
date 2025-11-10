@@ -1,9 +1,11 @@
+import { useCallback } from "react";
 import {
   BrowserRouter,
   Navigate,
   Outlet,
   Route,
   Routes,
+  useNavigate,
 } from "react-router-dom";
 import { Layout } from "./components/layout/Layout";
 import { AuthProvider } from "./context/AuthContext";
@@ -21,8 +23,12 @@ import { ProtectedRoute } from "./routes/ProtectedRoute";
 import { ThemeProvider } from "./theme";
 
 function AppLayout() {
+  const navigate = useNavigate();
+  const handleAddExpense = useCallback(() => {
+    navigate("/expenses?new=true");
+  }, [navigate]);
   return (
-    <Layout>
+    <Layout onAddExpense={handleAddExpense}>
       <Outlet />
     </Layout>
   );
