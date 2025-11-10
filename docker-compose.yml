@@ -1,0 +1,19 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BUN_PUBLIC_API_BASE_URL: ${BUN_PUBLIC_API_BASE_URL:-https://api-finora.jivit.dev}
+    container_name: finora-frontend
+    ports:
+      - "${FRONTEND_PORT:-8000}:80"
+    restart: unless-stopped
+    networks:
+      - finora-frontend-network
+    environment:
+      - BUN_PUBLIC_API_BASE_URL=${BUN_PUBLIC_API_BASE_URL:-https://api-finora.jivit.dev}
+
+networks:
+  finora-frontend-network:
+    driver: bridge
